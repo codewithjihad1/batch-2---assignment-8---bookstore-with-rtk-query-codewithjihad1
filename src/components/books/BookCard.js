@@ -1,13 +1,21 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDeleteBookMutation } from "../../features/api/booksApi";
 
 export default function BookCard({ book }) {
   const { name, author, thumbnail, price, featured, id } = book;
   const navigate = useNavigate();
+  const [deleteBook] = useDeleteBookMutation();
 
   // handle edit
   const handleEdit = () => {
     navigate(`/edit-book/${id}`);
+  };
+
+  // handle delete
+  const handleDelete = () => {
+    deleteBook(id);
   };
 
   return (
@@ -36,7 +44,7 @@ export default function BookCard({ book }) {
                 />
               </svg>
             </button>
-            <button className="lws-deleteBook">
+            <button className="lws-deleteBook" onClick={handleDelete}>
               <svg
                 fill="none"
                 viewBox="0 0 24 24"

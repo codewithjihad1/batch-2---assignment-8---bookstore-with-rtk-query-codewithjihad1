@@ -8,6 +8,7 @@ export const booksApi = createApi({
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: () => "/books",
+      keepUnusedDataFor: 500,
       providesTags: ["Books"],
     }),
     getBook: builder.query({
@@ -31,6 +32,14 @@ export const booksApi = createApi({
 
       invalidatesTags: ["Books"],
     }),
+    deleteBook: builder.mutation({
+      query: (id) => ({
+        url: `/books/${id}`,
+        method: "DELETE",
+      }),
+
+      invalidatesTags: ["Books"],
+    }),
   }),
 });
 
@@ -39,4 +48,5 @@ export const {
   useAddBookMutation,
   useEditBookMutation,
   useGetBookQuery,
+  useDeleteBookMutation,
 } = booksApi;
